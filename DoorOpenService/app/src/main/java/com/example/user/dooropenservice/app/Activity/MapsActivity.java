@@ -1,14 +1,11 @@
-
 package com.example.user.dooropenservice.app.Activity;
 
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,9 +28,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Geocoder geocoder;
-    private Button searchBtn, scopeBtn, finishBtn;
     private EditText search, edit_scope;
     private TextView showAll;
+    private boolean SEARCH_FLAG = false;
+    private boolean SCOPE_FLAG = false;
     private double lat = 37.5434205;
     private double lon = 127.0506808;
     private MarkerOptions markerOptions;
@@ -90,10 +88,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getContents() {
-        searchBtn = (Button) findViewById(R.id.searchBtn);
-        scopeBtn = (Button) findViewById(R.id.setScopeBtn);
-        finishBtn = (Button) findViewById(R.id.finishBtn);
-
         search = (EditText) findViewById(R.id.editText_search);
         edit_scope = (EditText) findViewById(R.id.editText_scope);
 
@@ -113,10 +107,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 setScopeOnMap();
                 break;
             case R.id.finishBtn:
-                ServerRegistNewLocation serverRegistNewLocation = new ServerRegistNewLocation(new CompanyVO(search.getText().toString(), lat, lon, Double.parseDouble(edit_scope.getText().toString())));
-                serverRegistNewLocation.start();
-                finish();
-                break;
+                if(SEARCH_FLAG && SCOPE_FLAG) {
+                    ServerRegistNewLocation serverRegistNewLocation = new ServerRegistNewLocation(new CompanyVO(search.getText().toString(), lat, lon, Double.parseDouble(edit_scope.getText().toString())));
+                    serverRegistNewLocation.start();
+                    finish();
+                    break;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"바르게 입력해주세요.",Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
@@ -136,8 +135,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(addressList != null){
                 if(addressList.size() == 0){
                     Toast.makeText(getApplicationContext(),"검색결과가 없습니다.",Toast.LENGTH_SHORT).show();
+                    SEARCH_FLAG = false;
                 }
                 else{
+                    SEARCH_FLAG = true;
 
                     String[] splitStr = addressList.get(0).toString().split(",");
                     String address = splitStr[0].substring(splitStr[0].indexOf("\"") + 1, splitStr[0].length() - 2); //주소
@@ -160,18 +161,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15));
 
                     setTextView("");
-
-
                 }
             }
         } else {
             Toast.makeText(getApplicationContext(), "장소를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            SEARCH_FLAG = false;
         }
 
     }
 
     private void setScopeOnMap() {
         if (!edit_scope.getText().toString().equals("")) {
+            SCOPE_FLAG = true;
+
             double scope = Double.parseDouble(edit_scope.getText().toString());
 
             LatLng position = new LatLng(lat, lon);
@@ -188,6 +190,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             setTextView(String.valueOf(scope));
         } else {
             Toast.makeText(getApplicationContext(), "범위를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            SCOPE_FLAG = false;
         }
     }
 
@@ -202,4 +205,3 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         showAll.setText(showInfo);
     }
 }
-

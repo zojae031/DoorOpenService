@@ -4,16 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.user.dooropenservice.R;
@@ -27,10 +24,9 @@ import java.util.ArrayList;
 public class SelectCompanyActivity extends Activity {
     private Button finishBtn;
     private RadioGroup radioGroup;
-    private String companyName = "sejong";
-    private String textCompany = "세종대학교";
+    private String companyName = "";
+    private String textCompany = "";
     Intent intent;
-    private ArrayList<CompanyVO> companyVOArrayList;
     private IGetCompanyListCallback callback;
 
     ServerGetCompanyList serverGetCompanyList;
@@ -43,71 +39,25 @@ public class SelectCompanyActivity extends Activity {
         setContentView(R.layout.activity_select_company);
 
         setContents();
-
-
-        callback = new IGetCompanyListCallback() {
-
-            //장소 선택 리스트뿌리기
-            @Override
-            public void sendData(final ArrayList<CompanyVO> companyVOArrayList) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < companyVOArrayList.size(); i++) {
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            RadioButton radioButton = new RadioButton(getApplicationContext());
-                            radioButton.setId(i);
-                            radioButton.setLayoutParams(params);
-
-                            radioButton.setText(companyVOArrayList.get(i).getCompany().replace("\"",""));
-                            radioButton.setTextColor(Color.parseColor("#FFFFFF"));
-                            radioGroup.addView(radioButton);
-                        }
-                    }
-                });
-
-
-                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        textCompany = companyVOArrayList.get(checkedId).getCompany().replace("\"","");
-                        companyName = companyVOArrayList.get(checkedId).getCompany().replace("\"","");
-
-                        Toast.makeText(getApplicationContext(), textCompany, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void ServerConnectionError() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "서버 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        };
-
-        serverGetCompanyList = new ServerGetCompanyList(new UserVO(null, null, null, null), callback);
-        serverGetCompanyList.start();
-
+        setList();
 
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("compName", companyName);
-                intent.putExtra("textCompany", textCompany);
-                Toast.makeText(getApplicationContext(), companyName, Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK, intent);
-                finish();
+                exitOption();
             }
         });
     }
 
+    private void exitOption() {
+        intent.putExtra("compName", companyName);
+        intent.putExtra("textCompany", textCompany);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     public void onBackPressed() {
-        return;
+        exitOption();
     }
 
     @Override
@@ -127,8 +77,51 @@ public class SelectCompanyActivity extends Activity {
     }
 
     public void setList() {
+        callback = new IGetCompanyListCallback() {
 
+            //장소 선택 리스트뿌리기
+            @Override
+            public void sendData(final ArrayList<CompanyVO> companyVOArrayList) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < companyVOArrayList.size(); i++) {
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            RadioButton radioButton = new RadioButton(getApplicationContext());
+                            radioButton.setId(i);
+                            radioButton.setLayoutParams(params);
+
+                            radioButton.setText(companyVOArrayList.get(i).getCompany().replace("\"", ""));
+                            radioButton.setTextColor(Color.parseColor("#FFFFFF"));
+                            radioGroup.addView(radioButton);
+                        }
+                    }
+                });
+
+
+                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        textCompany = companyVOArrayList.get(checkedId).getCompany().replace("\"", "");
+                        companyName = companyVOArrayList.get(checkedId).getCompany().replace("\"", "");
+
+                    }
+                });
+            }
+
+            @Override
+            public void ServerConnectionError() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "서버 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        serverGetCompanyList = new ServerGetCompanyList(new UserVO(null, null, null, null), callback);
+        serverGetCompanyList.start();
     }
-
 }
-

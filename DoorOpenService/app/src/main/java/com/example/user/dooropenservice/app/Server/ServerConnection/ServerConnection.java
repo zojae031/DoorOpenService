@@ -114,7 +114,7 @@ abstract class ServerConnection extends Thread {
         private String getEncryption(UserVO user){
         String encryptionPassword = null;
         if(user.getPassword()!=null) {
-            encryptionPassword = SHA256.encrypt(user.getId());
+            encryptionPassword = SHA256.encrypt(user.getPassword());
         }
         return encryptionPassword;
     }

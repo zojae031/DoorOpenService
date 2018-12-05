@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         managerBtn = (Button) findViewById(R.id.manager);
 
-        if (userId.equals("adminn")) {
+        if (userId.equals("admin")) {
             managerBtn.setVisibility(View.VISIBLE);
         } else {
             managerBtn.setVisibility(View.INVISIBLE);

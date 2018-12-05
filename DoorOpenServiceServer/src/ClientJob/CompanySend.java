@@ -25,7 +25,7 @@ public class CompanySend extends DBConnect implements DBConnectionInterface{
 		if(return_value == null)
 			return LOGIN_FAIL;
 		return return_value;
-	}
+	}//회원가입한 id 에 해당하는 회사에 대한 정보를 리턴해준다.
 	private JsonArray makeList(String id) throws SQLException
 	{
 		if(!connection())
@@ -53,5 +53,5 @@ public class CompanySend extends DBConnect implements DBConnectionInterface{
 		stat.close();
 		closeConnection();
 		return return_value;
-	}
+	}//company에 대한 정보를 return 해서 보내준다. ( 이때 사용 table = connect_company, member, company)
 }

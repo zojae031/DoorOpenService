@@ -26,7 +26,8 @@ public class DuplicateID extends DBConnect implements DBConnectionInterface {
 		if(return_value == 0)
 			return_value = SUCCESS;
 		return return_value;
-	}
+	}//회원가입할때 id가 중복되는지 확인하기 위함.
+	//차후에 id가 중복된다면 정보 수정과, 정보 추가 등이 존재할 수 있도록 만드는 것이 좋을 것 같다.
 	public boolean check_duplicate(JsonObject data) throws SQLException {
 		PreparedStatement stat;
 		stat = conn.prepareStatement(DUPLICATESQL);

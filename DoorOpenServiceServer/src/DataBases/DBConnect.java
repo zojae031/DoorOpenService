@@ -18,6 +18,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class DBConnect{	
+	//모든 데이터 베이스 작업은 이 클래스를 상속해야 한다.
+	//데이터베이스에 대한 정보는 이 클래스가 담당한다.	
+	
 	protected String address = "jdbc:mariadb://localhost:3306/dooropenservice";
 	protected String user = "root";
 	protected String password = "920821";
@@ -26,6 +29,8 @@ public class DBConnect{
 	public final int LOGIN_FAIL = 3;
 	public final int DUPLICATE_ID = 4;
 	public final int SUCCESS = 5;
+	
+	// SQL문에 대한 추가가 있을경우 protected final을 통해 클래스 상속 관계가 아닌 이상 확인 할 수 없게 한다.
 	protected final String SIGNUPSQL = "insert into member (id,password,name) values (?,?,?)";
 	protected final String SIGNINSQL = "update member set flag = 1 where id =? and password = ? and flag = 0";
 	protected final String LOGOUTSQL = "update member set flag = 0 where id = ?";
@@ -58,7 +63,7 @@ public class DBConnect{
 			e.printStackTrace();
 		}
 		return false;
-	}
+	}//모든 작업에 선행
 	protected boolean closeConnection()  {
 		if (conn != null)
 			try {
@@ -69,5 +74,5 @@ public class DBConnect{
 				e.printStackTrace();
 			}
 			return false;
-	}
+	}//모든 작업에 후행
 }

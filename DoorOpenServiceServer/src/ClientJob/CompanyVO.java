@@ -18,4 +18,4 @@ public class CompanyVO{
 		this.company = new JsonObject();
 		this.company.addProperty("company",company);
 	}
-}
+}//JsonArray에 Json Object 를 넣기 위한 구조체

@@ -15,7 +15,7 @@ public class CompanyAll extends DBConnect implements DBConnectionInterface{
 	@Override
 	public Object excute(JsonObject data) throws SQLException {
 		JsonArray return_value;
-		return_value = makeList();
+		return_value = makeList();//모든 회사 정보를 안드로이드에 보내준다.
 		if(return_value== null)
 			return LOGIN_FAIL;
 		return return_value;
@@ -28,7 +28,7 @@ public class CompanyAll extends DBConnect implements DBConnectionInterface{
 		}
 		JsonArray return_value = null;
 		PreparedStatement stat;
-		stat = conn.prepareStatement(COMPANYRETURN);
+		stat = conn.prepareStatement(COMPANYRETURN);//select name from company;
 		ResultSet res;
 		res = stat.executeQuery();
 		return_value = new JsonArray();
@@ -46,6 +46,6 @@ public class CompanyAll extends DBConnect implements DBConnectionInterface{
 		stat.close();
 		closeConnection();		
 		return return_value;
-	}
+	}// 모든 데이터베이스에 있는 회사정보를 JsonArray 로 리턴한다.
 
 }

@@ -31,5 +31,5 @@ public class Logout extends DBConnect implements DBConnectionInterface{
 		stat.close();
 		closeConnection();
 		return return_value;
-	}
+	}//로그아웃의경우 로그인을 하고 난 이후 로그아웃이므로 체크를 따로 할 필요가 없다.
 }

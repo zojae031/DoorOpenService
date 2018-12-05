@@ -1,11 +1,13 @@
 package com.example.user.dooropenservice.app.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,14 +109,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 setScopeOnMap();
                 break;
             case R.id.finishBtn:
-                if(SEARCH_FLAG && SCOPE_FLAG) {
+                if (SEARCH_FLAG && SCOPE_FLAG) {
                     ServerRegistNewLocation serverRegistNewLocation = new ServerRegistNewLocation(new CompanyVO(search.getText().toString(), lat, lon, Double.parseDouble(edit_scope.getText().toString())));
                     serverRegistNewLocation.start();
                     finish();
                     break;
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"바르게 입력해주세요.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "바르게 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -132,12 +133,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 e.printStackTrace();
             }
 
-            if(addressList != null){
-                if(addressList.size() == 0){
-                    Toast.makeText(getApplicationContext(),"검색결과가 없습니다.",Toast.LENGTH_SHORT).show();
+            if (addressList != null) {
+                if (addressList.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "검색결과가 없습니다.", Toast.LENGTH_SHORT).show();
                     SEARCH_FLAG = false;
-                }
-                else{
+                } else {
                     SEARCH_FLAG = true;
 
                     String[] splitStr = addressList.get(0).toString().split(",");
@@ -205,3 +205,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         showAll.setText(showInfo);
     }
 }
+

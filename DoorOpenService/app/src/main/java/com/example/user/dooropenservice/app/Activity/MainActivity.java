@@ -2,9 +2,11 @@ package com.example.user.dooropenservice.app.Activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -162,27 +164,45 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+                break;
+            case R.id.info:
+                setInfoAlertDialog();
+                break;
         }
     }
 
-    public void setManageButton(){
+    public void setManageButton() {
         String userId = user.getId();
 
         managerBtn = (Button) findViewById(R.id.manager);
 
-        if(userId.equals("admin")){
+        if (userId.equals("adminn")) {
             managerBtn.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             managerBtn.setVisibility(View.INVISIBLE);
         }
 
-        managerBtn.setOnClickListener(new View.OnClickListener(){
+        managerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
+    }
+
+    private void setInfoAlertDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("문의")
+                .setMessage("E-mail) edgar3@naver.com\nTel) 010-3610-8845")
+                .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

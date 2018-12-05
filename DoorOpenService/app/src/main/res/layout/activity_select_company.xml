@@ -29,10 +29,12 @@
 
     <Button
         android:id="@+id/finishBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="110dp"
+        android:layout_height="32dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="선택 완료" />
-
+        android:text="선택완료"
+        android:background="@drawable/button"
+        android:textColor="#666666"
+        />
 </LinearLayout>

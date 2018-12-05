@@ -52,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
         StartASyncTask();
 
         CallbackSetting();
+
+
     }
 
     //영문,숫자만 입력(한글 필터링)
@@ -122,7 +124,10 @@ public class SignUpActivity extends AppCompatActivity {
     private void checkCompName() {
         company.getText().toString();
 
-        if (company != null) {
+        if(company.equals("")){
+            CONFIRM_COMPANY_OK = false;
+        }
+        else{
             CONFIRM_COMPANY_OK = true;
         }
     }

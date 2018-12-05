@@ -29,6 +29,7 @@ public class SelectCompanyActivity extends Activity {
     Intent intent;
     private IGetCompanyListCallback callback;
 
+
     ServerGetCompanyList serverGetCompanyList;
     private final int RESULT_OK = 100;
 
@@ -44,7 +45,11 @@ public class SelectCompanyActivity extends Activity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exitOption();
+                if(companyName.equals(""))
+                    Toast.makeText(getApplicationContext(),"장소를 선택해주세요.",Toast.LENGTH_SHORT).show();
+                else {
+                    exitOption();
+                }
             }
         });
     }
@@ -105,7 +110,6 @@ public class SelectCompanyActivity extends Activity {
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         textCompany = companyVOArrayList.get(checkedId).getCompany().replace("\"", "");
                         companyName = companyVOArrayList.get(checkedId).getCompany().replace("\"", "");
-
                     }
                 });
             }

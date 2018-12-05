@@ -2,18 +2,24 @@ package com.example.user.dooropenservice.app.DoorOpenService;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.user.dooropenservice.R;
 import com.example.user.dooropenservice.app.Model.CompanyVO;
 import com.example.user.dooropenservice.app.ShakeAlgorithm.ShakeService;
 
@@ -114,6 +120,7 @@ public class DoorOpenService extends Service {
         setNotification(); //백그라운드 서비스를 유지하기위한 설정 (이거는 유지 onCreate에 있어야 함)
 
         getLocationManager();
+
     }
 
     public void getLocationManager() {

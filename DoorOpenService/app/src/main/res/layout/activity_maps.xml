@@ -98,14 +98,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="등록하기"
-        android:onClick="onClick"
         android:background="@drawable/button"
+        android:onClick="onClick"
+        android:text="등록하기"
         android:textColor="#666666"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_info" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_info"
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/textView6"

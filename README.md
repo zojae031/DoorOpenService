@@ -1,5 +1,11 @@
 # < Smart Leader ver1.0 (DoorOpenService) > 
 
+### 시연영상 (앱 시연, 관리자 모드, 사용자 모드)
+[<img src="./DoorOpenService/app/src/main/res/drawable/appicon.png" width="150" height="150">](https://youtu.be/GYMIdvY9oxQ)
+[<img src="./DoorOpenService/app/src/main/res/drawable/appicon.png" width="150" height="150">](https://youtu.be/tJKp-b6CPmg)
+[<img src="./DoorOpenService/app/src/main/res/drawable/appicon.png" width="150" height="150">](https://youtu.be/tJKp-b6CPmg)
+
+
 ## 개요 
 ##### 학교 출입문, 회사 출입문 등 결제기능없이 사용자 인증이 필요한 공간에 사용 할 수 있는 블루투스 기반 출입문 개폐 서비스
 
